@@ -18,7 +18,4 @@ public class Engine implements Serializable {
     private String name;
 
     private Double displacement;
-
-    // Maps Engine symbol to its capacity
-    private Map<String, Integer> types;
 }

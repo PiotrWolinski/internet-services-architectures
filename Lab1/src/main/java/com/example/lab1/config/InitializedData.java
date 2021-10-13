@@ -45,7 +45,7 @@ public class InitializedData {
                 .name("Mat")
                 .surname("Watson")
                 .birthDate(LocalDate.of(1984, 6, 12))
-                .email("matt@carwow.com")
+                .email("mat@carwow.com")
                 .password(Sha256Utility.hash("sTR0nG-p4ssW0rD"))
                 .build();
 
