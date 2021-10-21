@@ -28,7 +28,7 @@ public class InitializedData {
         this.engineService = engineService;
         this.userService = userService;
     }
-    // Podziele na osobne funkcje do inicjalizacji
+    // Podziele na osobne funkcje do inicjalizacji -> done
     @PostConstruct
     private synchronized void init() {
         User admin = User.builder()
