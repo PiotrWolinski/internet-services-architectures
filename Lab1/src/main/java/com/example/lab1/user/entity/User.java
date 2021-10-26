@@ -4,6 +4,7 @@ import com.example.lab1.car.entity.Car;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,10 +16,11 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
+@Entity
+@Table(name = "users")
 public class User implements Serializable {
 
-    private Long id;
-
+    @Id
     private String login;
 
     private String name;
@@ -30,8 +32,10 @@ public class User implements Serializable {
     @ToString.Exclude
     private String password;
 
+    @Column(unique = true)
     private String email;
 
     @ToString.Exclude
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Car> cars;
 }

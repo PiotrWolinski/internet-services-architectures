@@ -1,0 +1,74 @@
+GET http://localhost:8080/api/cars
+
+###
+
+GET http://localhost:8080/api/cars/3
+
+###
+
+GET http://localhost:8080/api/cars/4
+
+###
+
+POST http://localhost:8080/api/cars
+Content-Type: application/json
+
+{
+  "name": "Rimac Nevera",
+  "wheels": 4,
+  "seats": 2,
+  "maxSpeed": 340,
+  "doors": 2,
+  "user": "admin",
+  "engine": "V8 Biturbo"
+}
+
+###
+
+PUT http://localhost:8080/api/cars/4
+Content-Type: application/json
+
+{
+  "maxSpeed": "420"
+}
+
+###
+
+DELETE http://localhost:8080/api/cars/4
+
+###
+
+GET http://localhost:8080/api/users/admin/cars
+
+###
+
+GET http://localhost:8080/api/users/CarWow/cars
+
+###
+
+GET http://localhost:8080/api/users/admin/cars/2
+
+###
+
+GET http://localhost:8080/api/users/CarWow/cars/1
+
+###
+
+GET http://localhost:8080/api/users/admin/cars/5
+
+###
+
+POST http://localhost:8080/api/users/admin/cars
+Content-Type: application/json
+
+{
+  "name": "Rimac C_Two",
+  "wheels": 4,
+  "seats": 2,
+  "maxSpeed": 310,
+  "doors": 2,
+  "user": "admin",
+  "engine": "V8 Biturbo"
+}
+
+###

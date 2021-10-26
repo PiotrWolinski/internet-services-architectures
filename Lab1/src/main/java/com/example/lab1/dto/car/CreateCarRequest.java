@@ -1,4 +1,4 @@
-package com.example.lab1.dto;
+package com.example.lab1.dto.car;
 
 import com.example.lab1.car.entity.Car;
 import com.example.lab1.car.entity.Engine;
@@ -31,9 +31,11 @@ public class CreateCarRequest {
 
     private String engine;
 
+    private String user;
+
     public static Function<CreateCarRequest, Car> dtoToEntity(
             Function<String, Engine> engineFunction,
-            Supplier<User> userSupplier) {
+            Function<String, User> userFunction) {
         return request -> Car.builder()
                 .id(request.getId())
                 .name(request.getName())
@@ -41,7 +43,7 @@ public class CreateCarRequest {
                 .seats(request.getSeats())
                 .maxSpeed(request.getMaxSpeed())
                 .doors(request.getDoors())
-                .user(userSupplier.get())
+                .user(userFunction.apply(request.getUser()))
                 .engine(engineFunction.apply(request.getEngine()))
                 .build();
     }

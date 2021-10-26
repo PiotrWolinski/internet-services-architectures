@@ -3,9 +3,12 @@ package com.example.lab1.car.controller;
 import com.example.lab1.car.entity.Car;
 import com.example.lab1.car.service.CarService;
 import com.example.lab1.car.service.EngineService;
-import com.example.lab1.dto.CreateCarRequest;
-import com.example.lab1.dto.GetCarResponse;
-import com.example.lab1.dto.GetCarsResponse;
+import com.example.lab1.dto.car.CreateCarRequest;
+import com.example.lab1.dto.car.GetCarResponse;
+import com.example.lab1.dto.car.GetCarsResponse;
+import com.example.lab1.dto.car.UpdateCarRequest;
+import com.example.lab1.user.entity.User;
+import com.example.lab1.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 @RestController
@@ -22,10 +26,13 @@ public class CarController {
 
     private EngineService engineService;
 
+    private UserService userService;
+
     @Autowired
-    public CarController(CarService carService, EngineService engineService) {
+    public CarController(CarService carService, EngineService engineService, UserService userService) {
         this.carService = carService;
         this.engineService = engineService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -36,7 +43,7 @@ public class CarController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("{id}")
     public ResponseEntity<GetCarResponse> getCar(@PathVariable("id") long id) {
         return carService.find(id)
                 .map(car -> ResponseEntity.ok(GetCarResponse.entityToDto().apply(car)))
@@ -46,11 +53,37 @@ public class CarController {
     @PostMapping
     public ResponseEntity<Void> createCar(@RequestBody CreateCarRequest request, UriComponentsBuilder builder) {
         Car car = CreateCarRequest
-                .dtoToEntity(name -> engineService.find(name).orElseThrow(), () -> null)
+                .dtoToEntity(name -> engineService.find(name).orElseThrow(), user -> userService.find(user).orElseThrow())
                 .apply(request);
         car = carService.create(car); // Service + Repository must be changed to meet JPA standard first for it to work
 
         return ResponseEntity.created(builder.pathSegment("api", "cars", "{id}")
                 .buildAndExpand(car.getId()).toUri()).build();
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteCar(@PathVariable("id") long id) {
+        Optional<Car> car = carService.find(id);
+
+        if (car.isPresent()) {
+            carService.delete(car.get().getId()); // not working due to wrong service implementation
+            return ResponseEntity.accepted().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Void> updateCar(@RequestBody UpdateCarRequest request, @PathVariable("id") long id) {
+        Optional<Car> car = carService.find(id);
+
+        if (car.isPresent()) {
+            UpdateCarRequest.dtoToEntity().apply(car.get(), request);
+            carService.update(car.get());
+
+            return ResponseEntity.accepted().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

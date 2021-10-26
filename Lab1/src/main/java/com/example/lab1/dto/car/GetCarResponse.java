@@ -1,8 +1,6 @@
-package com.example.lab1.dto;
+package com.example.lab1.dto.car;
 
 import com.example.lab1.car.entity.Car;
-import com.example.lab1.car.entity.Engine;
-import com.example.lab1.user.entity.User;
 import lombok.*;
 
 import java.util.function.Function;
@@ -38,7 +36,7 @@ public class GetCarResponse {
                 .seats(car.getSeats())
                 .maxSpeed(car.getMaxSpeed())
                 .doors(car.getDoors())
-                .user(car.getUser().getName())
+                .user(car.getUser().getLogin())
                 .build();
     }
 }

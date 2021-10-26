@@ -17,22 +17,9 @@ public class EngineService {
     @Autowired
     public EngineService(EngineRepository repository) { this.repository = repository; }
 
-    public Optional<Engine> find(String name) { return repository.find(name); }
+    public Optional<Engine> find(String name) { return repository.findById(name); }
 
     public List<Engine> findAll() { return repository.findAll(); }
 
-    public void create(Engine engine) { repository.create(engine); }
-
-    public void addEngine(Scanner scanner) {
-
-        System.out.println("engine name: ");
-        String name = scanner.nextLine();
-        System.out.println("displacement: ");
-        Double displacement = Double.parseDouble(scanner.nextLine());
-
-        create(Engine.builder()
-                .name(name)
-                .displacement(displacement)
-                .build());
-    }
+    public Engine create(Engine engine) { return repository.save(engine); }
 }

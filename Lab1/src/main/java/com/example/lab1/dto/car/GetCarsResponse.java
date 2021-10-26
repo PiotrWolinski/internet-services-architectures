@@ -1,6 +1,5 @@
-package com.example.lab1.dto;
+package com.example.lab1.dto.car;
 
-import com.example.lab1.car.entity.Car;
 import lombok.*;
 
 import java.util.Collection;

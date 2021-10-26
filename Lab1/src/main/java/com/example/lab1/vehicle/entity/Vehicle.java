@@ -3,6 +3,7 @@ package com.example.lab1.vehicle.entity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
@@ -12,7 +13,13 @@ import java.io.Serializable;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
+@Entity
+@Table(name = "vehicles")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Vehicle implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     private String name;
