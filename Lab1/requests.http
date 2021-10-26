@@ -38,6 +38,27 @@ DELETE http://localhost:8080/api/cars/4
 
 ###
 
+GET http://localhost:8080/api/engines
+
+###
+
+GET http://localhost:8080/api/engines/35 TFSI
+
+###
+
+PUT http://localhost:8080/api/engines/35 TFSI
+Content-Type: application/json
+
+{
+  "displacement": "2.0"
+}
+
+###
+
+GET http://localhost:8080/api/engines/35 TFSI
+
+###
+
 GET http://localhost:8080/api/users/admin/cars
 
 ###

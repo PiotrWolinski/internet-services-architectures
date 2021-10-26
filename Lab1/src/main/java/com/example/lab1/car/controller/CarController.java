@@ -74,7 +74,8 @@ public class CarController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> updateCar(@RequestBody UpdateCarRequest request, @PathVariable("id") long id) {
+    public ResponseEntity<Void> updateCar(@RequestBody UpdateCarRequest request,
+                                          @PathVariable("id") long id) {
         Optional<Car> car = carService.find(id);
 
         if (car.isPresent()) {
