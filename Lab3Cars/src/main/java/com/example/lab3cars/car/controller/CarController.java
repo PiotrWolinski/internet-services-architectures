@@ -1,13 +1,13 @@
-package com.example.lab1.car.controller;
+package com.example.lab3cars.car.controller;
 
-import com.example.lab1.car.entity.Car;
-import com.example.lab1.car.service.CarService;
-import com.example.lab1.car.service.EngineService;
-import com.example.lab1.dto.car.CreateCarRequest;
-import com.example.lab1.dto.car.GetCarResponse;
-import com.example.lab1.dto.car.GetCarsResponse;
-import com.example.lab1.dto.car.UpdateCarRequest;
-import com.example.lab1.user.service.UserService;
+import com.example.lab3cars.car.entity.Car;
+import com.example.lab3cars.car.service.CarService;
+import com.example.lab3cars.car.service.EngineService;
+import com.example.lab3cars.car.dto.CreateCarRequest;
+import com.example.lab3cars.car.dto.GetCarResponse;
+import com.example.lab3cars.car.dto.GetCarsResponse;
+import com.example.lab3cars.car.dto.UpdateCarRequest;
+import com.example.lab3cars.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

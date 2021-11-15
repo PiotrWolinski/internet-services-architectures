@@ -1,11 +1,10 @@
-package com.example.lab1.car.service;
+package com.example.lab3cars.car.service;
 
-import com.example.lab1.car.entity.Car;
-import com.example.lab1.car.entity.Engine;
-import com.example.lab1.car.repository.CarRepository;
-import com.example.lab1.car.repository.EngineRepository;
-import com.example.lab1.user.entity.User;
-import com.example.lab1.user.repository.UserRepository;
+import com.example.lab3cars.car.entity.Car;
+import com.example.lab3cars.car.repository.CarRepository;
+import com.example.lab3cars.car.repository.EngineRepository;
+import com.example.lab3cars.user.entity.User;
+import com.example.lab3cars.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
