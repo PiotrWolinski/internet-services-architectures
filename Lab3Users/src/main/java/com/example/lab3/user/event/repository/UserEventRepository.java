@@ -14,7 +14,7 @@ public class UserEventRepository {
     private RestTemplate template;
 
     @Autowired
-    public UserEventRepository(@Value("http://localhost:8082/api/") String baseUrl) {
+    public UserEventRepository(@Value("${app.cars.url}") String baseUrl) {
         template = new RestTemplateBuilder().rootUri(baseUrl).build();
     }
 
