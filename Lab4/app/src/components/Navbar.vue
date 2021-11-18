@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { logSth } from '@/api/api';
+
 const PATHS = [
   {
     path: "/",
@@ -66,7 +68,7 @@ export default {
       }
       pathElement.active = true;
       this.$router.push(pathElement.path);
-      console.log(this.$Api);
+      logSth()
     },
   },
 };

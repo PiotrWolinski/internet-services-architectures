@@ -1,11 +1,14 @@
-function logSth() {
+export function logSth() {
     console.log('STHHH');
 }
 
-const api = {
-    logSth
+export function logSthMore() {
+    console.log('STHHHMOORE');
 }
 
-export default {
-    api
+const api = {
+    logSth,
+    logSthMore
 }
+
+export default api;

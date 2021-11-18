@@ -23,7 +23,7 @@ public class GetCarsResponse {
     @ToString
     @EqualsAndHashCode
     public static class Car {
-        private long id;
+        private Long id;
 
         private String name;
     }

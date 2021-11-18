@@ -19,13 +19,10 @@ public class CarService {
 
     private UserRepository userRepository;
 
-    private EngineRepository engineRepository;
-
     @Autowired
-    public CarService(CarRepository repository, UserRepository userRepository, EngineRepository engineRepository) {
+    public CarService(CarRepository repository, UserRepository userRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
-        this.engineRepository = engineRepository;
     }
 
     public Optional<Car> find(Long id) { return repository.findById(id); }

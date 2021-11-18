@@ -10,3 +10,17 @@
     </b-card>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'ShowCategory',
+
+  data: function () {
+    return {
+      name: ""
+    }
+  }
+}
+
+
+</script>
