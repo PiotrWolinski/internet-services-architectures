@@ -3,7 +3,7 @@
     <b-button
       v-for="pathElement in PATHS"
       :key="pathElement.path"
-      :variant="pathElement.active ? 'warning' : 'light'"
+      :variant="pathElement.isCurrent ? 'warning' : 'light'"
       @click="changeView(pathElement)"
     >
       {{ pathElement.name }}
@@ -12,43 +12,22 @@
 </template>
 
 <script>
-import { logSth } from '@/api/api';
 
 const PATHS = [
   {
     path: "/",
     name: "Home",
-    active: true,
+    isCurrent: false,
   },
   {
-    path: "/show_category",
-    name: "Show category",
-    active: false,
+    path: "/users",
+    name: "Show users",
+    isCurrent: false,
   },
   {
-    path: "/add_category",
-    name: "Add category",
-    active: false,
-  },
-  {
-    path: "/edit_category",
-    name: "Edit category",
-    active: false,
-  },
-  {
-    path: "/add_element",
-    name: "Add element",
-    active: false,
-  },
-  {
-    path: "/edit_element",
-    name: "Edit element",
-    active: false,
-  },
-  {
-    path: "/element",
-    name: "Show element",
-    active: false,
+    path: "/cars",
+    name: "Show cars",
+    isCurrent: false,
   },
 ];
 
@@ -61,15 +40,28 @@ export default {
     };
   },
 
+  created() {
+    this.setActiveRoute();
+  },
+
   methods: {
     changeView(pathElement) {
       for (let path of this.PATHS) {
-        path.active = false;
+        path.isCurrent = false;
       }
-      pathElement.active = true;
+      pathElement.isCurrent = true;
       this.$router.push(pathElement.path);
-      logSth()
+      this.setActiveRoute();
     },
+
+    setActiveRoute() {
+      for (let path of this.PATHS) {
+        if (path.path == this.$router.currentRoute.path) {
+          path.isCurrent = true;
+          break;
+        }
+      }
+    }
   },
 };
 </script>
