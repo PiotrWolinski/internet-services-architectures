@@ -120,7 +120,6 @@ export default {
   async mounted() {
     await this.loadCars();
     await this.loadCarsDetailed();
-    console.log(this.cars);
   },
   methods: {
     async loadCars() {
@@ -133,8 +132,6 @@ export default {
       } else {
         res = await getCars();
       }
-
-      console.log(res);
 
       this.cars = res.cars;
 
@@ -164,11 +161,7 @@ export default {
     },
 
     async loadCarDetails(carObject) {
-      console.log("Loading");
-      console.log(carObject);
-
       carObject.details = await getCar(carObject.id);
-      console.log(carObject);
 
       carObject.detailsLoaded = true;
     },
@@ -176,7 +169,6 @@ export default {
     async loadCarsDetailed() {
       this.carsLoadedDetailed = false;
       for (let car of this.cars) {
-        console.log(car);
         await this.loadCarDetails(car);
       }
       this.carsLoadedDetailed = true;

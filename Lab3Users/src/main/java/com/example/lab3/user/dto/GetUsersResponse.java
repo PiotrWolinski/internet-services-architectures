@@ -16,15 +16,28 @@ import java.util.function.Function;
 @EqualsAndHashCode
 public class GetUsersResponse {
 
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @ToString
+    @EqualsAndHashCode
+    public static class User {
+
+        private String login;
+    }
 
     @Singular
-    private List<String> users;
+    private List<User> users;
 
-    public static Function<Collection<User>, GetUsersResponse> entityToDto() {
+    public static Function<Collection<com.example.lab3.user.entity.User>, GetUsersResponse> entityToDto() {
         return characters -> {
             GetUsersResponseBuilder response = GetUsersResponse.builder();
             characters.stream()
-                    .map(User::getLogin)
+                    .map( user -> User.builder()
+                            .login(user.getLogin())
+                            .build())
                     .forEach(response::user);
             return response.build();
         };

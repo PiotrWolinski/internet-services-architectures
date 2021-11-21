@@ -25,7 +25,7 @@ public class CreateUserRequest {
 
     private String password;
 
-    private String birthDate;
+    private LocalDate birthDate;
 
     public static Function<CreateUserRequest, User> dtoToEntity() {
         return request -> User.builder()
@@ -33,7 +33,7 @@ public class CreateUserRequest {
                 .name(request.getName())
                 .surname(request.getSurname())
                 .email(request.getEmail())
-                .birthDate(LocalDate.parse(request.getBirthDate()))
+                .birthDate(request.getBirthDate())
                 .password(Sha256Utility.hash(request.getPassword()))
                 .build();
     }
