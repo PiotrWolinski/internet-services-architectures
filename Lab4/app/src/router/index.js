@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
 import Users from '@/views/Users.vue';
-import Cars from '@/views/Cars.vue';
+import Cars from '@/views/CarsView.vue';
 
 Vue.use(VueRouter)
 
