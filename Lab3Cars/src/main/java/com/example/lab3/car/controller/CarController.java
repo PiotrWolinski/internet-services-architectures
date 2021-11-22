@@ -2,7 +2,6 @@ package com.example.lab3.car.controller;
 
 import com.example.lab3.car.entity.Car;
 import com.example.lab3.car.service.CarService;
-import com.example.lab3.car.service.EngineService;
 import com.example.lab3.car.dto.CreateCarRequest;
 import com.example.lab3.car.dto.GetCarResponse;
 import com.example.lab3.car.dto.GetCarsResponse;
@@ -24,15 +23,12 @@ public class CarController {
 
     private CarService carService;
 
-    private EngineService engineService;
-
     private UserService userService;
 
     // add all params constructor and remove autowired
     @Autowired
-    public CarController(CarService carService, EngineService engineService, UserService userService) {
+    public CarController(CarService carService,UserService userService) {
         this.carService = carService;
-        this.engineService = engineService;
         this.userService = userService;
     }
 
@@ -54,7 +50,7 @@ public class CarController {
     @PostMapping
     public ResponseEntity<Void> createCar(@RequestBody CreateCarRequest request, UriComponentsBuilder builder) {
         Car car = CreateCarRequest
-                .dtoToEntity(name -> engineService.find(name).orElseThrow(), user -> userService.find(user).orElseThrow())
+                .dtoToEntity(user -> userService.find(user).orElseThrow())
                 .apply(request);
         car = carService.create(car); // Service + Repository must be changed to meet JPA standard first for it to work
 

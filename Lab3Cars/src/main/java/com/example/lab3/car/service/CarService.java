@@ -2,7 +2,6 @@ package com.example.lab3.car.service;
 
 import com.example.lab3.car.entity.Car;
 import com.example.lab3.car.repository.CarRepository;
-import com.example.lab3.car.repository.EngineRepository;
 import com.example.lab3.user.entity.User;
 import com.example.lab3.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

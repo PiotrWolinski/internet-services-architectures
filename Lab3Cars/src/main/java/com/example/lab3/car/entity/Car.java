@@ -24,11 +24,11 @@ public class Car extends Vehicle {
     @JoinColumn(name = "user")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "engine")
-    private Engine engine;
-
     private int doors;
+
+    private double displacement;
+
+    private int horsePower;
 
     @Override
     public String toString() {
@@ -39,8 +39,9 @@ public class Car extends Vehicle {
         s += String.format("wheels=%d,", getWheels());
         s += String.format("seats=%s, ", getSeats());
         s += String.format("masSpeed=%s, ", getMaxSpeed());
+        s += String.format("displacement=%s, ", getDisplacement());
+        s += String.format("horsePower=%s, ", getHorsePower());
         s += String.format("user=%s, ", getUser().getLogin());
-        s += String.format("engine=%s", getEngine().getName());
         s += ">";
         return s;
     }

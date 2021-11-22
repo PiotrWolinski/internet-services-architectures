@@ -18,10 +18,13 @@ public class UpdateCarRequest {
 
     private int seats;
 
+    private int horsePower;
+
     public static BiFunction<Car, UpdateCarRequest, Car> dtoToEntity() {
         return (car, request) -> {
             car.setMaxSpeed(request.getMaxSpeed());
             car.setSeats(request.getSeats());
+            car.setHorsePower(request.getHorsePower());
             return car;
         };
     }

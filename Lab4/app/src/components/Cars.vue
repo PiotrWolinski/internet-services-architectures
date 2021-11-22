@@ -3,7 +3,7 @@
     <b-row v-if="!detailed">
       <b-col cols="5" />
       <b-col cols="2">
-        <b-button variant="success">Create</b-button>
+        <b-button variant="success" v-b-modal.create-car-modal>Create</b-button>
       </b-col>
       <b-col cols="5" />
     </b-row>
@@ -14,13 +14,13 @@
           cols="6"
           v-if="carsLoaded"
           :fields="detailed_fields"
-          :items="cars"
+          :items="items"
         >
           <template #cell(name)="data">
             {{ data.item.name }}
           </template>
           <template #cell(details)="row">
-            <b-button variant="secondary" @click="viewCar(row)">{{
+            <b-button variant="secondary" @click="row.toggleDetails()">{{
               row.item._showDetails ? "Hide" : "Show"
             }}</b-button>
           </template>
@@ -30,59 +30,157 @@
             >
           </template>
           <template #cell(delete)="data">
-            <b-button variant="danger" @click="deleteCar(data.item.name)">
+            <b-button variant="danger" @click="deleteCar(data.item)">
               Delete
             </b-button>
           </template>
           <template #row-details="row">
-            <b-container v-if="row.item.detailsLoaded">
+            <b-container>
               <b-row class="mb-2">
                 <b-col sm="3" class="text-sm-right"><b>Max speed:</b></b-col>
-                <b-col cols="3">{{ row.item.details.maxSpeed }}</b-col>
+                <b-col cols="3">{{ row.item.maxSpeed }}</b-col>
                 <b-col sm="3" class="text-sm-right"><b>Seats:</b></b-col>
-                <b-col cols="3">{{ row.item.details.seats }}</b-col>
+                <b-col cols="3">{{ row.item.seats }}</b-col>
+              </b-row>
+              <b-row class="mb-2">
+                <b-col sm="3" class="text-sm-right"><b>Horsepower:</b></b-col>
+                <b-col cols="3">{{ row.item.horsePower }}</b-col>
+                <b-col sm="3" class="text-sm-right"><b>Displacement:</b></b-col>
+                <b-col cols="3">{{ row.item.displacement }}</b-col>
               </b-row>
               <b-row class="mb-2">
                 <b-col sm="3" class="text-sm-right"><b>Wheels:</b></b-col>
-                <b-col cols="3">{{ row.item.details.wheels }}</b-col>
+                <b-col cols="3">{{ row.item.wheels }}</b-col>
                 <b-col sm="3" class="text-sm-right"><b>Doors:</b></b-col>
-                <b-col cols="3">{{ row.item.details.doors }}</b-col>
+                <b-col cols="3">{{ row.item.doors }}</b-col>
               </b-row>
               <b-row class="mb-2">
                 <b-col sm="3" class="text-sm-right"><b>User:</b></b-col>
-                <b-col cols="3">{{ row.item.details.user }}</b-col>
+                <b-col cols="3">{{ row.item.user }}</b-col>
               </b-row>
-            </b-container>
-            <b-container v-else>
-              <b-col cols="12" class="py-4">
-                <b-spinner style="width: 3rem; height: 3rem" />
-              </b-col>
             </b-container>
           </template>
         </b-table>
       </b-col>
       <b-col cols="3"></b-col>
     </b-row>
-    <b-row v-if="detailed && carsLoadedDetailed">
+    <b-row v-if="detailed && carsLoaded">
       <b-col>
-        <b-table cols="6" :fields="general_fields" :items="cars">
+        <b-table cols="6" :fields="general_fields" :items="items">
           <template #cell(max_speed)="data">
-            {{ data.item.details.maxSpeed }}
+            {{ data.item.maxSpeed }}
           </template>
-          <template #cell(seats)="data">
-            {{ data.item.details.seats }}
+          <template #cell(displacement)="data">
+            {{ data.item.displacement }}
           </template>
-          <template #cell(wheels)="data">
-            {{ data.item.details.wheels }}
+          <template #cell(horsepower)="data">
+            {{ data.item.horsePower }}
           </template>
           <template #cell(delete)="data">
-            <b-button variant="danger" @click="deleteCar(data.item.name)">
+            <b-button variant="danger" @click="deleteCar(data.item)">
               Delete
             </b-button>
           </template>
         </b-table>
       </b-col>
     </b-row>
+    <b-modal id="create-car-modal" size="lg" :hide-header="true">
+      <b-container>
+        <h4>Create new user form</h4>
+        <hr />
+        <b-row class="pt-2">
+          <b-col cols="3">
+            <b>Name</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input v-model="form.name" placeholder="Name" />
+          </b-col>
+          <b-col cols="3">
+            <b>Max speed</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input v-model="form.maxSpeed" placeholder="Max speed" />
+          </b-col>
+        </b-row>
+        <b-row class="pt-4">
+          <b-col cols="3">
+            <b>Horsepower</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input v-model="form.horsepower" placeholder="Horsepower" />
+          </b-col>
+          <b-col cols="3">
+            <b>Displacement</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input
+              v-model="form.displacement"
+              placeholder="Displacement"
+            />
+          </b-col>
+        </b-row>
+        <b-row class="pt-4">
+          <b-col cols="3">
+            <b>Seats</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input v-model="form.seats" placeholder="Seats" />
+          </b-col>
+          <b-col cols="3">
+            <b>Wheels</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input v-model="form.wheels" placeholder="Wheels" />
+          </b-col>
+        </b-row>
+        <b-row class="pt-4">
+          <b-col cols="3">
+            <b>Doors</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input v-model="form.doors" placeholder="Doors" />
+          </b-col>
+          <b-col cols="3">
+            <b>User</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input v-model="form.user" placeholder="User login" />
+          </b-col>
+        </b-row>
+      </b-container>
+      <template #modal-footer="{}">
+        <b-button variant="danger" @click="closeCreateCarForm()">
+          Cancel
+        </b-button>
+        <b-button variant="success" @click="createCar()">Create car</b-button>
+      </template>
+    </b-modal>
+    <b-modal id="edit-car-modal" size="lg" :hide-header="true">
+      <b-container>
+        <h4>Edit car form</h4>
+        <hr />
+        <b-row class="pt-2">
+          <b-col cols="3">
+            <b>Max speed</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input v-model="form.maxSpeed" placeholder="Max speed" />
+          </b-col>
+          <b-col cols="3">
+            <b>Seats</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input v-model="form.seats" placeholder="Seats" />
+          </b-col>
+        </b-row>
+      </b-container>
+      <template #modal-footer="{}">
+        <b-button variant="danger" @click="closeEditCarForm()">
+          Cancel
+        </b-button>
+        <b-button variant="success" @click="editCar()">Edit car</b-button>
+      </template>
+    </b-modal>
   </b-container>
 </template>
 
@@ -92,11 +190,12 @@ import {
   getCar,
   getUserCars,
   deleteCar as apiDeleteCar,
+  createCar as apiCreateCar,
 } from "@/api/api.js";
 
 const DETAILED_FIELDS = ["name", "details", "edit", "delete"];
 
-const GENERAL_FIELDS = ["name", "max_speed", "seats", "wheels", "delete"];
+const GENERAL_FIELDS = ["name", "max_speed", "displacement", "horsepower", "delete"];
 
 export default {
   name: "Cars",
@@ -109,23 +208,32 @@ export default {
   data: function () {
     return {
       cars: [],
+      items: [],
       general_fields: GENERAL_FIELDS,
       detailed_fields: DETAILED_FIELDS,
-      selectedCar: "",
       carsLoaded: false,
       carsLoadedDetailed: false,
       carLoading: false,
+      nextIndex: 2,
+      form: {
+        id: null,
+        name: null,
+        maxSpeed: null,
+        horsePower: null,
+        displacemet: null,
+        seats: null,
+        doors: null,
+        wheels: null,
+        user: null,
+      },
     };
   },
   async mounted() {
-    await this.loadCars();
-    await this.loadCarsDetailed();
+    await this.parseCars();
   },
+
   methods: {
     async loadCars() {
-      this.carsLoaded = false;
-      this.cars = [];
-
       let res = null;
       if (this.detailed) {
         res = await getUserCars(this.user);
@@ -134,44 +242,49 @@ export default {
       }
 
       this.cars = res.cars;
+    },
 
-      this.parseCars();
+    async parseCars() {
+      this.carsLoaded = false;
+      await this.loadCars();
+      this.items = [];
+
+      for (let car of this.cars) {
+        let detailedCar = await getCar(car.id);
+        this.items.push(detailedCar);
+        this.nextIndex++;
+      }
 
       this.carsLoaded = true;
-    },
-
-    parseCars() {
-      for (let car of this.cars) {
-        car.detailsLoaded = false;
-      }
-    },
-
-    viewCar(row) {
-      this.loadCarDetails(row.item);
-      row.toggleDetails();
     },
 
     editCar(carName) {
       console.log("Editing ", carName);
     },
 
-    async deleteCar(carName) {
-      await apiDeleteCar(carName);
-      this.loadCars();
+    async deleteCar(car) {
+      await apiDeleteCar(car.id);
+      this.parseCars();
     },
 
-    async loadCarDetails(carObject) {
-      carObject.details = await getCar(carObject.id);
-
-      carObject.detailsLoaded = true;
+    async createCar() {
+      console.log(this.form);
+      this.form.id = this.nextIndex;
+      this.nextIndex++;
+      await apiCreateCar(this.form);
+      this.resetForm();
+      this.parseCars();
+      this.closeCreateCarForm();
     },
 
-    async loadCarsDetailed() {
-      this.carsLoadedDetailed = false;
-      for (let car of this.cars) {
-        await this.loadCarDetails(car);
+    resetForm() {
+      for (let key in this.form) {
+        this.form[key] = null;
       }
-      this.carsLoadedDetailed = true;
+    },
+
+    closeCreateCarForm() {
+      this.$bvModal.hide("create-car-modal");
     },
   },
 };

@@ -6,16 +6,16 @@ export async function getUsers() {
   //   users: ["admin", "Johny", "Vincent", "Mr. Steele"],
   // };
 
-    console.log(`Fetching users from ${API_URL}`);
-    let res = await axios
-      .get(`${API_URL}/users`, {
-        params: {},
-      })
-      .then(response => {
-        return response;
-      });
+  console.log(`Fetching users from ${API_URL}`);
+  let res = await axios
+    .get(`${API_URL}/users`, {
+      params: {},
+    })
+    .then((response) => {
+      return response;
+    });
 
-      return res.data;
+  return res.data;
 }
 
 export async function getUser(username) {
@@ -59,11 +59,11 @@ export async function getUserCars(user) {
     .get(`${API_URL}/users/${user}/cars`, {
       params: {},
     })
-    .then(response => {
+    .then((response) => {
       return response;
     });
 
-    return res.data;
+  return res.data;
 }
 
 export async function deleteUser(user) {
@@ -80,19 +80,22 @@ export async function deleteUser(user) {
 
 export async function createUser(user) {
   let res = await axios
-    .post(`${API_URL}/users`, {
-      login: user.login,
-      name: user.name,
-      surname: user.surname,
-      email: user.email,
-      password: user.password,
-      birthdate: user.birthdate,
-    }, 
-    {
-      headers: {
-        "Content-Type": "application/json",
+    .post(
+      `${API_URL}/users`,
+      {
+        login: user.login,
+        name: user.name,
+        surname: user.surname,
+        email: user.email,
+        password: user.password,
+        birthdate: user.birthdate,
       },
-    })
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
     .then((response) => {
       return response;
     });
@@ -102,18 +105,21 @@ export async function createUser(user) {
 
 export async function editUser(user) {
   let res = await axios
-    .put(`${API_URL}/users/${user.login}`, {
-      name: user.name,
-      surname: user.surname,
-      email: user.email,
-      password: user.password,
-      birthdate: user.birthdate,
-    }, 
-    {
-      headers: {
-        "Content-Type": "application/json",
+    .put(
+      `${API_URL}/users/${user.login}`,
+      {
+        name: user.name,
+        surname: user.surname,
+        email: user.email,
+        password: user.password,
+        birthdate: user.birthdate,
       },
-    })
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
     .then((response) => {
       return response;
     });
@@ -156,27 +162,18 @@ export async function getCars() {
 }
 
 export async function getCar(id) {
-  return {
-    id: 2,
-    name: "Audi RSQ8",
-    wheels: 4,
-    seats: 5,
-    maxSpeed: 280,
-    doors: 5,
-    user: "admin",
-  };
 
-  //   console.log(`Fetching cars from ${API_URL}`);
-  //   let res = await axios
-  //     .get(`${API_URL}/cars/${id}`, {
-  //       params: {},
-  //     })
+    console.log(`Fetching cars from ${API_URL}`);
+    let res = await axios
+      .get(`${API_URL}/cars/${id}`, {
+        params: {},
+      })
 
-  //     .then(response => {
-  //       return response;
-  //     });
+      .then(response => {
+        return response;
+      });
 
-  //     return res.data;
+      return res.data;
 }
 
 export async function deleteCar(car) {
@@ -189,6 +186,33 @@ export async function deleteCar(car) {
     });
 
   return res.data;
+}
+
+export async function createCar(car) {
+  console.log(car)
+  let res = await axios
+    .post(
+      `${API_URL}/cars`,
+      {
+        id: car.id,
+        name: car.name,
+        maxSpeed: car.maxSpeed,
+        seats: car.seats,
+        doors: car.doors,
+        wheels: car.wheels,
+        user: car.user,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      return response;
+    });
+
+  return res;
 }
 
 const api = {

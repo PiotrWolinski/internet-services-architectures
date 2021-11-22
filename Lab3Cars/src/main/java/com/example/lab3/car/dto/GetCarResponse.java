@@ -24,6 +24,10 @@ public class GetCarResponse {
 
     private int maxSpeed;
 
+    private int horsePower;
+
+    private double displacement;
+
     private int doors;
 
     private String user;
@@ -35,6 +39,8 @@ public class GetCarResponse {
                 .wheels(car.getWheels())
                 .seats(car.getSeats())
                 .maxSpeed(car.getMaxSpeed())
+                .horsePower(car.getHorsePower())
+                .displacement(car.getDisplacement())
                 .doors(car.getDoors())
                 .user(car.getUser().getLogin())
                 .build();

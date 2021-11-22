@@ -1,7 +1,6 @@
 package com.example.lab3.car.dto;
 
 import com.example.lab3.car.entity.Car;
-import com.example.lab3.car.entity.Engine;
 import com.example.lab3.user.entity.User;
 import lombok.*;
 
@@ -26,14 +25,15 @@ public class CreateCarRequest {
 
     private int maxSpeed;
 
-    private int doors;
+    private int horsePower;
 
-    private String engine;
+    private double displacement;
+
+    private int doors;
 
     private String user;
 
     public static Function<CreateCarRequest, Car> dtoToEntity(
-            Function<String, Engine> engineFunction,
             Function<String, User> userFunction) {
         return request -> Car.builder()
                 .id(request.getId())
@@ -41,9 +41,10 @@ public class CreateCarRequest {
                 .wheels(request.getWheels())
                 .seats(request.getSeats())
                 .maxSpeed(request.getMaxSpeed())
+                .horsePower(request.getHorsePower())
+                .displacement(request.getDisplacement())
                 .doors(request.getDoors())
                 .user(userFunction.apply(request.getUser()))
-                .engine(engineFunction.apply(request.getEngine()))
                 .build();
     }
 

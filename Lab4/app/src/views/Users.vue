@@ -203,7 +203,6 @@ export default {
       items: [],
       usersDetailed: {},
       fields: FIELDS,
-      selectedUser: "",
       usersLoaded: false,
       form: {
         name: null,

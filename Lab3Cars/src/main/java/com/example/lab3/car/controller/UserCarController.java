@@ -2,7 +2,6 @@ package com.example.lab3.car.controller;
 
 import com.example.lab3.car.entity.Car;
 import com.example.lab3.car.service.CarService;
-import com.example.lab3.car.service.EngineService;
 import com.example.lab3.car.dto.CreateCarRequest;
 import com.example.lab3.car.dto.GetCarResponse;
 import com.example.lab3.car.dto.GetCarsResponse;
@@ -21,14 +20,11 @@ public class UserCarController {
 
     private CarService carService;
 
-    private EngineService engineService;
-
     private UserService userService;
 
     @Autowired
-    public UserCarController(CarService carService, EngineService engineService, UserService userService) {
+    public UserCarController(CarService carService, UserService userService) {
         this.carService = carService;
-        this.engineService = engineService;
         this.userService = userService;
     }
 
@@ -54,8 +50,7 @@ public class UserCarController {
 
         if (user.isPresent()) {
             Car car = CreateCarRequest
-                    .dtoToEntity(name -> engineService.find(name).orElseThrow(),
-                            name -> userService.find(username).orElseThrow())
+                    .dtoToEntity(name -> userService.find(username).orElseThrow())
                     .apply(request);
             car = carService.create(car); // Implement JPA
 
