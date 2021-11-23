@@ -21,12 +21,12 @@ const PATHS = [
   },
   {
     path: "/users",
-    name: "Show users",
+    name: "Users",
     isCurrent: false,
   },
   {
     path: "/cars",
-    name: "Show cars",
+    name: "Cars",
     isCurrent: false,
   },
 ];

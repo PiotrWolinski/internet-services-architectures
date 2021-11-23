@@ -7,7 +7,7 @@
       </b-col>
       <b-col cols="5" />
     </b-row>
-    <b-row v-if="!detailed && carsLoaded">
+    <b-row v-if="!detailed && carsLoaded" class="py-4">
       <b-col cols="3"></b-col>
       <b-col>
         <b-table
@@ -25,7 +25,7 @@
             }}</b-button>
           </template>
           <template #cell(edit)="data">
-            <b-button variant="warning" @click="editCar(data.item.name)"
+            <b-button variant="warning" @click="openEditCarForm(data.item.id)"
               >Edit</b-button
             >
           </template>
@@ -107,7 +107,7 @@
             <b>Horsepower</b>
           </b-col>
           <b-col cols="3">
-            <b-form-input v-model="form.horsepower" placeholder="Horsepower" />
+            <b-form-input v-model="form.horsePower" placeholder="Horsepower" />
           </b-col>
           <b-col cols="3">
             <b>Displacement</b>
@@ -164,13 +164,27 @@
             <b>Max speed</b>
           </b-col>
           <b-col cols="3">
-            <b-form-input v-model="form.maxSpeed" placeholder="Max speed" />
+            <b-form-input
+              v-model="carToEdit.maxSpeed"
+              placeholder="Max speed"
+            />
           </b-col>
           <b-col cols="3">
             <b>Seats</b>
           </b-col>
           <b-col cols="3">
-            <b-form-input v-model="form.seats" placeholder="Seats" />
+            <b-form-input v-model="carToEdit.seats" placeholder="Seats" />
+          </b-col>
+        </b-row>
+        <b-row class="pt-2">
+          <b-col cols="3">
+            <b>Horsepower</b>
+          </b-col>
+          <b-col cols="3">
+            <b-form-input
+              v-model="carToEdit.horsePower"
+              placeholder="Horsepower"
+            />
           </b-col>
         </b-row>
       </b-container>
@@ -191,11 +205,18 @@ import {
   getUserCars,
   deleteCar as apiDeleteCar,
   createCar as apiCreateCar,
+  editCar as apiEditCar,
 } from "@/api/api.js";
 
 const DETAILED_FIELDS = ["name", "details", "edit", "delete"];
 
-const GENERAL_FIELDS = ["name", "max_speed", "displacement", "horsepower", "delete"];
+const GENERAL_FIELDS = [
+  "name",
+  "max_speed",
+  "displacement",
+  "horsepower",
+  "delete",
+];
 
 export default {
   name: "Cars",
@@ -220,11 +241,16 @@ export default {
         name: null,
         maxSpeed: null,
         horsePower: null,
-        displacemet: null,
+        displacement: null,
         seats: null,
         doors: null,
         wheels: null,
         user: null,
+      },
+      carToEdit: {
+        maxSpeed: null,
+        horsePower: null,
+        seats: null,
       },
     };
   },
@@ -258,8 +284,26 @@ export default {
       this.carsLoaded = true;
     },
 
-    editCar(carName) {
-      console.log("Editing ", carName);
+    async editCar() {
+      await apiEditCar(this.carToEdit);
+      this.resetEditForm();
+      this.parseCars();
+      this.closeEditCarForm();
+    },
+
+    openEditCarForm(id) {
+      this.findCarToEdit(id);
+      this.$bvModal.show("edit-car-modal");
+    },
+
+    async findCarToEdit(id) {
+      for (const car of this.items) {
+        if (car.id == id) {
+          console.log(car);
+          this.carToEdit = car;
+          break;
+        }
+      }
     },
 
     async deleteCar(car) {
@@ -272,19 +316,29 @@ export default {
       this.form.id = this.nextIndex;
       this.nextIndex++;
       await apiCreateCar(this.form);
-      this.resetForm();
+      this.resetCreateForm();
       this.parseCars();
       this.closeCreateCarForm();
     },
 
-    resetForm() {
+    resetCreateForm() {
       for (let key in this.form) {
+        this.form[key] = null;
+      }
+    },
+
+    resetEditForm() {
+      for (let key in this.carToEdit) {
         this.form[key] = null;
       }
     },
 
     closeCreateCarForm() {
       this.$bvModal.hide("create-car-modal");
+    },
+
+    closeEditCarForm() {
+      this.$bvModal.hide("edit-car-modal");
     },
   },
 };

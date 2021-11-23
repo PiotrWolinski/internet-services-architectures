@@ -2,14 +2,14 @@
   <b-container>
     <b-row>
       <b-col cols="5" />
-      <b-col cols="2">
+      <b-col cols="2" >
         <b-button variant="success" v-b-modal.create-user-modal
           >Create</b-button
         >
       </b-col>
       <b-col cols="5" />
     </b-row>
-    <b-row v-if="usersLoaded">
+    <b-row v-if="usersLoaded" class="py-4">
       <b-col cols="3"></b-col>
       <b-col>
         <b-table cols="6" v-if="usersLoaded" :fields="fields" :items="items">
@@ -139,19 +139,7 @@
       <b-container>
         <h4>Edit user form</h4>
         <hr />
-        <b-row class="pt-2">
-          <b-col cols="3">
-            <b>Email</b>
-          </b-col>
-          <b-col cols="3">
-            <b-form-input
-              v-model="userToEdit.email"
-              :type="'email'"
-              placeholder="Email"
-            />
-          </b-col>
-        </b-row>
-        <b-row class="pt-4">
+        <b-row class="py-4">
           <b-col cols="3">
             <b>Name</b>
           </b-col>
@@ -163,6 +151,18 @@
           </b-col>
           <b-col cols="3">
             <b-form-input v-model="userToEdit.surname" placeholder="Surname" />
+          </b-col>
+        </b-row>
+        <b-row class="py-3">
+          <b-col cols="3">
+            <b>Email</b>
+          </b-col>
+          <b-col cols="6">
+            <b-form-input
+              v-model="userToEdit.email"
+              :type="'email'"
+              placeholder="Email"
+            />
           </b-col>
         </b-row>
       </b-container>
@@ -215,8 +215,6 @@ export default {
       userToEdit: {
         name: null,
         surname: null,
-        login: null,
-        password: null,
         email: null,
         birthdate: null,
       },
@@ -264,7 +262,7 @@ export default {
 
     async editUser() {
       await apiEditUser(this.userToEdit);
-      this.resetForm();
+      this.resetEditForm();
       this.parseUsers();
       this.closeEditUserForm();
     },
@@ -285,8 +283,14 @@ export default {
       this.parseUsers();
     },
 
-    resetForm() {
+    resetCreateForm() {
       for (let key in this.form) {
+        this.form[key] = null;
+      }
+    },
+
+    resetEditForm() {
+      for (let key in this.userToEdit) {
         this.form[key] = null;
       }
     },
@@ -303,7 +307,7 @@ export default {
     async createUser() {
       console.log(this.form);
       await apiCreateUser(this.form);
-      this.resetForm();
+      this.resetCreateForm();
       this.parseUsers();
       this.closeCreateUserForm();
     },
