@@ -15,6 +15,7 @@
           v-if="carsLoaded"
           :fields="detailed_fields"
           :items="items"
+          show-empty
         >
           <template #cell(name)="data">
             {{ data.item.name }}
@@ -33,6 +34,9 @@
             <b-button variant="danger" @click="deleteCar(data.item)">
               Delete
             </b-button>
+          </template>
+          <template #empty="">
+            <h4><b>No cars found</b></h4>
           </template>
           <template #row-details="row">
             <b-container>
@@ -66,7 +70,7 @@
     </b-row>
     <b-row v-if="detailed && carsLoaded">
       <b-col>
-        <b-table cols="6" :fields="general_fields" :items="items">
+        <b-table cols="6" :fields="general_fields" :items="items" show-empty>
           <template #cell(max_speed)="data">
             {{ data.item.maxSpeed }}
           </template>
@@ -80,6 +84,9 @@
             <b-button variant="danger" @click="deleteCar(data.item)">
               Delete
             </b-button>
+          </template>
+          <template #empty="">
+            <h4><b>No cars found</b></h4>
           </template>
         </b-table>
       </b-col>

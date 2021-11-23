@@ -73,7 +73,7 @@ public class InitializedData {
         Car opel = Car.builder()
                 .user(userService.find("admin").get())
                 .doors(5)
-                .name("Opel Insignia")
+                .name("Nissan 370Z")
                 .wheels(4)
                 .seats(5)
                 .maxSpeed(200)

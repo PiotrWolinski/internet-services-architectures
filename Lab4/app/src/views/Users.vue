@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col cols="5" />
-      <b-col cols="2" >
+      <b-col cols="2">
         <b-button variant="success" v-b-modal.create-user-modal
           >Create</b-button
         >
@@ -12,7 +12,7 @@
     <b-row v-if="usersLoaded" class="py-4">
       <b-col cols="3"></b-col>
       <b-col>
-        <b-table cols="6" v-if="usersLoaded" :fields="fields" :items="items">
+        <b-table cols="6" v-if="usersLoaded" :fields="fields" :items="items" show-empty>
           <template #cell(name)="data">
             {{ data.item.login }}
           </template>
@@ -32,6 +32,9 @@
             <b-button variant="danger" @click="deleteUser(data.item.login)">
               Delete
             </b-button>
+          </template>
+          <template #empty="">
+            <h4><b>No users found</b></h4>
           </template>
           <template #row-details="row">
             <b-container v-if="row.item.detailsLoaded">
@@ -170,11 +173,7 @@
         <b-button variant="danger" @click="closeEditUserForm()">
           Cancel
         </b-button>
-        <b-button
-          variant="success"
-          @click="editUser()"
-          >Update user</b-button
-        >
+        <b-button variant="success" @click="editUser()">Update user</b-button>
       </template>
     </b-modal>
   </b-container>
