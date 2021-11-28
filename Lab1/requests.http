@@ -63,6 +63,10 @@ GET http://localhost:8080/api/engines/35 TFSI
 
 ###
 
+GET http://localhost:8080/api/users
+
+###
+
 GET http://localhost:8080/api/users/admin/cars
 
 ###

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  cars:
+    build: "../Lab3Cars"
+    ports: ":8081"
+
+  users:
+    build: "../Lab3Users"
+    ports: ":8081"
+    depends_on:
+      - cars
+
+  vue:
+    build: "../Lab4"
+    ports: "8080:8083"
+    depends_on:
+      - cars
+      - users
+  
+  gateway:
+    build: "../lab3Gateway"
+    ports: "8080:8080"
+    depends_on:
+      - cars
+      - users
