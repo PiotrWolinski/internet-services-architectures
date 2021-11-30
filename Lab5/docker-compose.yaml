@@ -1,26 +1,35 @@
-version: '3.8'
+version: '3.7'
 
 services:
   cars:
-    build: "../Lab3Cars"
-    ports: ":8081"
+    build: "../dockerizedApps/Lab3Cars"
+    expose:
+      - "8082"
 
   users:
-    build: "../Lab3Users"
-    ports: ":8081"
+    build: "../dockerizedApps/Lab3Users"
+    expose:
+      - "8081"
     depends_on:
-      - cars
+      - "cars"
 
-  vue:
-    build: "../Lab4"
-    ports: "8080:8083"
-    depends_on:
-      - cars
-      - users
+  # vue:
+  #   build: "../Lab4"
+  #   ports: 
+  #     - "8080:8083"
+  #   depends_on:
+  #     - cars
+  #     - users
   
   gateway:
-    build: "../lab3Gateway"
-    ports: "8080:8080"
-    depends_on:
-      - cars
-      - users
+    build: "../dockerizedApps/lab3Gateway"
+    expose:
+      - "8080"
+    ports:
+      - ":8080"
+
+  proxy:
+    build: "../Lab5nginx"
+    ports: 
+      - "80:80"
+

@@ -91,64 +91,6 @@
         </b-table>
       </b-col>
     </b-row>
-        <b-row v-if="usersLoaded" class="py-4">
-      <b-col cols="3"></b-col>
-      <b-col>
-        <b-table cols="6" v-if="usersLoaded" :fields="fields" :items="items" show-empty>
-          <template #cell(name)="data">
-            {{ data.item.login }}
-          </template>
-          <template #cell(details)="row">
-            <b-button variant="secondary" @click="viewUser(row)">{{
-              row.item._showDetails ? "Hide" : "Show"
-            }}</b-button>
-          </template>
-          <template #cell(edit)="data">
-            <b-button
-              variant="warning"
-              @click="openEditUserForm(data.item.login)"
-              >Edit</b-button
-            >
-          </template>
-          <template #cell(delete)="data">
-            <b-button variant="danger" @click="deleteUser(data.item.login)">
-              Delete
-            </b-button>
-          </template>
-          <template #empty="">
-            <h4><b>No users found</b></h4>
-          </template>
-          <template #row-details="row">
-            <b-container v-if="row.item.detailsLoaded">
-              <b-row class="mb-2">
-                <b-col sm="3" class="text-sm-right"><b>Name:</b></b-col>
-                <b-col cols="3">{{ row.item.name }}</b-col>
-                <b-col sm="3" class="text-sm-right"><b>Surname:</b></b-col>
-                <b-col cols="3">{{ row.item.surname }}</b-col>
-              </b-row>
-              <b-row class="mb-2">
-                <b-col sm="3" class="text-sm-right"><b>Email:</b></b-col>
-                <b-col cols="3">{{ row.item.email }}</b-col>
-              </b-row>
-              <b-row class="mb-2">
-                <Cars :detailed="true" :user="row.item.login" />
-              </b-row>
-            </b-container>
-            <b-container v-else>
-              <b-col cols="12" class="py-4">
-                <b-spinner style="width: 3rem; height: 3rem" />
-              </b-col>
-            </b-container>
-          </template>
-        </b-table>
-      </b-col>
-      <b-col cols="3"></b-col>
-    </b-row>
-    <b-row v-else>
-      <b-col cols="12" class="py-4">
-        <b-spinner style="width: 3rem; height: 3rem" />
-      </b-col>
-    </b-row>
     <b-modal id="create-car-modal" size="lg" :hide-header="true">
       <b-container>
         <h4>Create new user form</h4>
