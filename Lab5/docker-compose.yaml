@@ -13,23 +13,17 @@ services:
     depends_on:
       - "cars"
 
-  # vue:
-  #   build: "../Lab4"
-  #   ports: 
-  #     - "8080:8083"
-  #   depends_on:
-  #     - cars
-  #     - users
-  
   gateway:
     build: "../dockerizedApps/lab3Gateway"
     expose:
       - "8080"
-    ports:
-      - ":8080"
+
+  frontend:
+    build: "../dockerizedApps/frontend/app"
+    expose:
+      - "8083"
 
   proxy:
     build: "../Lab5nginx"
     ports: 
       - "80:80"
-
